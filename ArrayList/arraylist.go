@@ -14,7 +14,6 @@ type List interface {
 	Size() int
 }
 
-
 type ArrayList struct {
 	values []int
 	inserted  int //posição que vai adicionar
