@@ -7,12 +7,13 @@ import (
 type List interface {
   AddLast(value int)
   AddPos(value int, pos int)
-  Update(value int, pos int)
 	RemoveLast()
   Remove(pos int)
   Get(pos int) int
+  Set(value int, pos int)
 	Size() int
 }
+
 
 type ArrayList struct {
 	values []int
@@ -21,7 +22,7 @@ type ArrayList struct {
 
 //duplicar capacidade do vetor
 func (list *ArrayList) doubleArray(){
-  fmt.Println("Entrou na função doubleArray()")
+  fmt.Println("Duplicando o tamanho do array...")
   curSize := len(list.values) //tamanho do vetor
   doubledValues := make([]int, 2*curSize)
 	
@@ -34,7 +35,7 @@ func (list *ArrayList) doubleArray(){
 
 //Adicionar elemento
 func (list *ArrayList) AddLast(val int){
-  fmt.Println("Entrou na função AddLast()")
+  fmt.Println("Adicionando elemento: ", val)
   //verificação para duplicar o tamanho do array se necessário
   if list.inserted >= len(list.values){
     list.doubleArray()
@@ -46,7 +47,7 @@ func (list *ArrayList) AddLast(val int){
 
 //Adicona em posição específica
 func (list *ArrayList) AddPos(val int, pos int){
-  fmt.Println("Entrou na função AddPos()")
+  fmt.Println("Adiconando elemento: ", val, " na posição: ", pos)
   //verificando se é um valor válido
   if pos >= 0 && pos <= list.inserted{
     //verificar se array está lotado
@@ -62,26 +63,17 @@ func (list *ArrayList) AddPos(val int, pos int){
   }
 }
 
-//Atualiza em posição específica
-func (list *ArrayList) Update(val int, pos int){
-  fmt.Println("Entrou na função Update()")
-  //verificando se é um valor válido
-  if pos >= 0 && pos <= list.inserted{
-    list.values[pos] = val
-  }
-}
-
 //Remover o último valor
 func (list *ArrayList) RemoveLast(){
-  fmt.Println("Entrou na função RemoveLast()")
+  fmt.Println("Removendo o último elemento")
   list.inserted--;
 }
 
 //Remover em posição específica
 func (list *ArrayList) Remove(pos int){
-  fmt.Println("Entrou na função Remove()")
+  fmt.Println("Removendo elemento na posição: ", pos)
   //verifica se a posição é válida
-  if pos >=0 && pos < list.inserted{
+  if pos >=0 && pos <= list.inserted{
     for pos < list.inserted -1 {
       list.values[pos] = list.values[pos + 1]
       pos++
@@ -92,35 +84,55 @@ func (list *ArrayList) Remove(pos int){
 
 //Acessa o elemento em uma posição
 func (list *ArrayList) Get(pos int) int {
-  if pos >=0 && pos < list.inserted{
+  if pos >=0 && pos <= list.inserted{
     return list.values[pos]
   }
   return -1
 }
 
+//Seta o valor para uma posição específica
+func (list *ArrayList) Set(value int, pos int){
+  fmt.Println("Setando o valor: ", value, " na posição: ", pos)
+  if pos>=0 && pos <= list.inserted{
+    list.values[pos] = value
+  }
+}
+
 //Tamanho do Array
 func (list *ArrayList) Size() int{
+  //fmt.Println("Acessando o tamanho do array...")
   return list.inserted
 }
 
 //função principal
 func main() {
-  lista := ArrayList{}
-  lista.values = make([]int, 10)
+  lista := ArrayList{values: []int{1,2,3,4,5,6,7,8, 9, 10}, inserted: 10}
 
+  fmt.Println("Elementos da lista: ")
+  for i:=0; i<lista.Size(); i++{
+    fmt.Print(lista.Get(i), " ")
+  }
+  
+  fmt.Println("\nTamanho da lista: ", lista.Size())
   lista.AddLast(1)
-  lista.AddLast(2)
+  lista.AddLast(3)
   lista.AddLast(3)
   lista.AddLast(4)
-  lista.AddLast(5)
-  lista.AddLast(6)
-  lista.AddLast(7)
-  lista.AddLast(8)
-  lista.AddLast(9)
-  lista.AddLast(10)
-  fmt.Println(lista)
-  lista.AddPos(7,2)
-  fmt.Println(lista)
-  lista.Remove(2)
-  fmt.Println(lista)
+
+  fmt.Println("Elementos da lista: ")
+  for i:=0; i<lista.Size(); i++{
+    fmt.Print(lista.Get(i), " ")
+  }
+
+  lista.AddPos(2,7)
+  lista.RemoveLast()
+  lista.Remove(5)
+  lista.Set(2,11)
+
+  fmt.Println("Elementos da lista: ")
+  for i:=0; i<lista.Size(); i++{
+    fmt.Print(lista.Get(i), " ")
+  }
+
+  fmt.Println("Tamanho da lista: ", lista.Size())
 }
