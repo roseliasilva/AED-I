@@ -14,6 +14,23 @@ type List interface{
 	Size() int
 }
 
+type DoublyLinkedList struct{
+  head *Node2p
+  tail *Node2p
+  inserted int
+}
+
+type Node2p struct{
+  prev *Node2p //anterior
+  value int    //valor
+  next *Node2p //próximo
+}
+
+func (doublyLinkedList *DoublyLinkedList) AddLast(value int){
+  newNode := Node2p{nil, value, nil}
+  
+}
+
 func main() {
 	fmt.Println("Hello, World!")
 }
