@@ -27,7 +27,7 @@ type Node2p struct{
 }
 
 func (doublyLinkedList *DoublyLinkedList) AddLast(value int){
-  newNode := Node2p{nil, value, nil}
+  //newNode := Node2p{nil, value, nil}
   
 }
 
