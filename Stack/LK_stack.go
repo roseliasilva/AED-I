@@ -1,14 +1,17 @@
 package main
 
+//https://replit.com/@roseliasilva/Pilha-LinkedList#main.go
+
 import (
 	"fmt"
 )
 
 type Stack interface{
-  push(value int) //empilhar
-  pop() //desempilhar
-  top() int //topo
-  size() int //tamanho
+  Push(value int) //empilhar
+  Pop() //desempilhar
+  Top() int //topo
+  Empty() bool
+  Size() int //tamanho
 } 
 
 type Node struct{
@@ -22,25 +25,28 @@ type LinkedListStack struct{
 }
 
 //Empilhar os elementos na pilha
-func (stack *LinkedListStack) push(value int){
+func (stack *LinkedListStack) Push(value int){
   stack.topo = &Node{value, stack.topo}
   stack.inserted++
 }
 
 
 //Desempilhar os elementos da pilha
-func (stack *LinkedListStack) pop(){
+func (stack *LinkedListStack) Pop(){
   if stack.inserted>0{
     //o próximo topo não é nulo???
     if stack.topo.next!=nil{
       //fazer o topo apontar para o prox topo
       stack.topo = stack.topo.next
+    }else{
+      stack.topo = nil
     }
+    stack.inserted--
   }
 }
 
 //Retorna o topo da pilha
-func (stack *LinkedListStack) top() int {
+func (stack *LinkedListStack) Top() int {
   if stack.topo != nil{
     return stack.topo.val
   }else{
@@ -49,12 +55,14 @@ func (stack *LinkedListStack) top() int {
   }
 }
 
-/*
-//retorna a quantidade de elementos sem modificr a pilha
-func (pilha *LinkedListStack) size() int {
-  
+func (stack *LinkedListStack) Empty() bool{
+  return stack.inserted == 0
 }
-*/
+
+//retorna a quantidade de elementos sem modificr a pilha
+func (stack *LinkedListStack) Size() int {
+  return stack.inserted
+}
 
 func main() {
 	//fmt.Println("Hello, World!")
@@ -62,10 +70,13 @@ func main() {
   stack := LinkedListStack{}
 
   for i:=0; i<5; i++{
-    stack.push(i)
+    stack.Push(i)
   }
 
-  stack.pop()
-  fmt.Println(stack.top())
-  
+  fmt.Println("Tamanho da pilha: ", stack.Size())
+  fmt.Println("Topo da pilha: ", stack.Top())
+  fmt.Println("Desempilhando..")
+  stack.Pop()
+  fmt.Println("Topo da pilha: ", stack.Top())
+  fmt.Println("Tamanho da pilha: ", stack.Size())
 }
