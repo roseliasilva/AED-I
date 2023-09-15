@@ -64,7 +64,7 @@ func (stack *LinkedListStack) Size() int {
   return stack.inserted
 }
 
-func main() {
+func main(){
 	//fmt.Println("Hello, World!")
 
   stack := LinkedListStack{}
